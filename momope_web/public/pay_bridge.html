@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MomoPe Payment</title>
+</head>
+
+<body>
+    <h2 style="text-align: center; font-family: sans-serif; margin-top: 50px;">Initializing Secure Payment...</h2>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <script>
+        // Parse Query Params
+        const params = new URLSearchParams(window.location.search);
+        const order_id = params.get('order_id');
+        const key_id = params.get('key_id');
+        const amount = params.get('amount');
+        const merchant_name = params.get('merchant_name') || 'Merchant';
+        const redirect_url = params.get('redirect_url'); // The Deep Link
+
+        if (!order_id || !key_id) {
+            document.body.innerHTML = '<h3 style="color:red; text-align:center">Missing Payment Parameters</h3>';
+        } else {
+            const options = {
+                key: key_id,
+                amount: amount,
+                currency: "INR",
+                name: "MomoPe Rewards",
+                description: "Payment to " + merchant_name,
+                image: "https://momope.com/logo.png",
+                order_id: order_id,
+                handler: function (response) {
+                    // Ensure the deep link is triggered
+                    const successUrl = `${redirect_url}?status=success&razorpay_payment_id=${response.razorpay_payment_id}&razorpay_order_id=${response.razorpay_order_id}&razorpay_signature=${response.razorpay_signature}`;
+                    window.location.href = successUrl;
+                },
+                modal: {
+                    ondismiss: function () {
+                        window.location.href = `${redirect_url}?status=cancelled`;
+                    }
+                },
+                prefill: {
+                    contact: params.get('mobile') || '',
+                    email: params.get('email') || ''
+                },
+                theme: {
+                    color: "#2CB78A"
+                },
+                config: {
+                    display: {
+                        blocks: {
+                            upi: {
+                                name: "Pay via UPI",
+                                instruments: [
+                                    {
+                                        method: "upi"
+                                    }
+                                ]
+                            },
+                            other: {
+                                name: "Other Payment Methods",
+                                instruments: [
+                                    { method: "card" },
+                                    { method: "netbanking" },
+                                    { method: "wallet" }
+                                ]
+                            }
+                        },
+                        sequence: ["block.upi", "block.other"],
+                        preferences: {
+                            show_default_blocks: false
+                        }
+                    }
+                }
+            };
+            const rzp1 = new Razorpay(options);
+            rzp1.open();
+        }
+    </script>
+</body>
+
+</html>

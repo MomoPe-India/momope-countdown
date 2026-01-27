@@ -1,0 +1,46 @@
+
+> momope_web@0.1.0 build
+> next build
+
+▲ Next.js 16.1.2 (Turbopack)
+- Environments: .env.local
+
+  Creating an optimized production build ...
+(node:45252) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///C:/Project/MomoPe/momope_web/postcss.config.js is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to C:\Project\MomoPe\momope_web\package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✓ Compiled successfully in 3.5s
+  Running TypeScript ...
+  Collecting page data using 15 workers ...
+  Generating static pages using 15 workers (0/19) ...
+  Generating static pages using 15 workers (4/19) 
+  Generating static pages using 15 workers (9/19) 
+  Generating static pages using 15 workers (14/19) 
+✓ Generating static pages using 15 workers (19/19) in 387.1ms
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ○ /about
+├ ○ /admin
+├ ○ /admin/dashboard
+├ ○ /admin/login
+├ ƒ /admin/merchants/[id]
+├ ƒ /api/auth/otp/send
+├ ƒ /api/auth/otp/verify
+├ ƒ /api/auth/pin/login
+├ ƒ /api/auth/pin/set
+├ ƒ /api/auth/pin/verify
+├ ƒ /api/merchant/onboard
+├ ƒ /api/merchant/profile
+├ ○ /contact
+├ ○ /privacy
+├ ○ /refund-policy
+└ ○ /terms
+
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+

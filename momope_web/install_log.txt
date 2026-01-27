@@ -1,0 +1,25 @@
+npm warn using --force Recommended protections disabled.
+npm warn deprecated next@15.1.0: This version has a security vulnerability. Please upgrade to a patched version. See https://nextjs.org/blog/CVE-2025-66478 for more details.
+npm warn cleanup Failed to remove some directories [
+npm warn cleanup   [
+npm warn cleanup     '\\\\?\\C:\\Project\\MomoPe\\momope_web\\node_modules\\next',
+npm warn cleanup     [Error: EPERM: operation not permitted, rmdir 'C:\Project\MomoPe\momope_web\node_modules\next\dist\esm\server\app-render'] {
+npm warn cleanup       errno: -4048,
+npm warn cleanup       code: 'EPERM',
+npm warn cleanup       syscall: 'rmdir',
+npm warn cleanup       path: 'C:\\Project\\MomoPe\\momope_web\\node_modules\\next\\dist\\esm\\server\\app-render'
+npm warn cleanup     }
+npm warn cleanup   ],
+npm warn cleanup   [
+npm warn cleanup     'C:\\Project\\MomoPe\\momope_web\\node_modules\\next',
+npm warn cleanup     [Error: EPERM: operation not permitted, rmdir 'C:\Project\MomoPe\momope_web\node_modules\next\dist\esm\build\webpack'] {
+npm warn cleanup       errno: -4048,
+npm warn cleanup       code: 'EPERM',
+npm warn cleanup       syscall: 'rmdir',
+npm warn cleanup       path: 'C:\\Project\\MomoPe\\momope_web\\node_modules\\next\\dist\\esm\\build\\webpack'
+npm warn cleanup     }
+npm warn cleanup   ]
+npm warn cleanup ]
+npm error code ERR_INVALID_ARG_TYPE
+npm error The "file" argument must be of type string. Received undefined
+npm error A complete log of this run can be found in: C:\Users\Mohan\AppData\Local\npm-cache\_logs\2026-01-22T04_24_40_527Z-debug-0.log

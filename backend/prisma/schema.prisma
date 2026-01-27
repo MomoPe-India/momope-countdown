@@ -1,0 +1,227 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// -----------------------------------------------------------------------------
+// 1. Identity & Access
+// -----------------------------------------------------------------------------
+
+enum Role {
+  CUSTOMER
+  MERCHANT
+  ADMIN
+}
+
+model User {
+  id        String   @id @default(uuid())
+  mobile    String   @unique
+  role      Role
+  pin_hash  String?  // BCrypt hash of 4-6 digit PIN
+  is_active Boolean  @default(true)
+  
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  
+  // Relations
+  sessions    Session[]
+  customer    Customer?
+  merchant    Merchant?
+
+  @@map("users")
+}
+
+model Session {
+  id        String   @id @default(uuid())
+  user_id   String
+  token     String   @unique
+  device_id String?
+  expires_at DateTime
+  
+  created_at DateTime @default(now())
+  
+  user User @relation(fields: [user_id], references: [id])
+
+  @@map("sessions")
+}
+
+// -----------------------------------------------------------------------------
+// 2. Profiles
+// -----------------------------------------------------------------------------
+
+enum KycStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  NEEDS_CLARIFICATION
+}
+
+model Merchant {
+  user_id             String  @id
+  business_name       String
+  
+  // Financial Config (Admin finalized)
+  commission_rate     Decimal @db.Decimal(5, 2) // e.g. 15.00
+  max_reward_cap      Decimal @default(10.00) @db.Decimal(5, 2) // Max 10.00
+  
+  // Compliance
+  kyc_status          KycStatus @default(PENDING)
+  razorpay_account_id String?   // Linked Account ID for Route
+  
+  // Onboarding
+  is_onboarding_complete Boolean @default(false)
+  
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  user          User           @relation(fields: [user_id], references: [id])
+  kyc_documents KycDocument[]
+  transactions  Transaction[]
+
+  @@map("merchants")
+}
+
+model Customer {
+  user_id   String  @id
+  full_name String
+  email     String?
+  
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  user         User          @relation(fields: [user_id], references: [id])
+  transactions Transaction[]
+  momo_coins   MomoCoins?
+
+  @@map("customers")
+}
+
+enum DocType {
+  PAN
+  GST
+  BANK_PROOF
+  ADDRESS_PROOF
+  OTHER
+}
+
+model KycDocument {
+  id          String    @id @default(uuid())
+  merchant_id String
+  doc_type    DocType
+  file_url    String
+  status      KycStatus @default(PENDING)
+  admin_note  String?
+  
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
+
+  merchant Merchant @relation(fields: [merchant_id], references: [user_id])
+
+  @@map("kyc_documents")
+}
+
+// -----------------------------------------------------------------------------
+// 3. Financials & Payment State Machine
+// -----------------------------------------------------------------------------
+
+enum TxnStatus {
+  CREATED     // Order created in Razorpay
+  INITIATED   // User clicked pay (UPI Intent fired)
+  SUCCESS     // Webhook: payment.captured (Funds received)
+  FAILED      // Webhook: payment.failed
+  SETTLED     // Funds moved to merchant (T+1)
+}
+
+model Transaction {
+  id                String    @id @default(uuid())
+  razorpay_order_id String    @unique
+  merchant_id       String
+  customer_id       String
+  
+  // Money Flow
+  amount_gross      Decimal   @db.Decimal(10, 2) // Bill amount
+  amount_net        Decimal   @db.Decimal(10, 2) // Actual paid via UPI (Gross - Coins)
+  
+  // Coins
+  coins_redeemed    Int       @default(0) // 1 Coin = 1 Rupee
+  coins_earned      Int       @default(0)
+  
+  // Economics Snapshot
+  commission_rate   Decimal   @db.Decimal(5, 2) // Snapshot at txn time
+  random_reward_pct Decimal   @db.Decimal(5, 2) // Snapshot
+  commission_amount Decimal   @db.Decimal(10, 2) // Calculated commission
+  
+  // State
+  status            TxnStatus @default(CREATED)
+  failure_reason    String?
+  
+  created_at        DateTime  @default(now())
+  updated_at        DateTime  @updatedAt
+
+  merchant       Merchant       @relation(fields: [merchant_id], references: [user_id])
+  customer       Customer       @relation(fields: [customer_id], references: [user_id])
+  ledger_entries LedgerEntry[]
+
+  @@map("transactions")
+  @@index([merchant_id])
+  @@index([customer_id])
+}
+
+model MomoCoins {
+  customer_id       String @id
+  balance_available Int    @default(0)
+  balance_pending   Int    @default(0) // Anti-fraud hold
+  lifetime_earned   Int    @default(0)
+  lifetime_redeemed Int    @default(0)
+  
+  updated_at        DateTime @updatedAt
+  
+  customer Customer @relation(fields: [customer_id], references: [user_id])
+
+  @@map("momo_coins")
+}
+
+// -----------------------------------------------------------------------------
+// 4. Ledger (Double Entry Accounting)
+// -----------------------------------------------------------------------------
+
+enum EntityType {
+  PLATFORM
+  MERCHANT
+  CUSTOMER
+}
+
+enum LedgerType {
+  COMMISSION
+  SETTLEMENT
+  COIN_ISSUANCE
+  COIN_REDEMPTION
+  PAYMENT_RECEIVED
+}
+
+model LedgerEntry {
+  id             String      @id @default(uuid())
+  transaction_id String
+  
+  entity_type    EntityType
+  entity_id      String      // ID of Merchant, Customer, or 'PLATFORM'
+  
+  debit          Decimal     @default(0) @db.Decimal(10, 2)
+  credit         Decimal     @default(0) @db.Decimal(10, 2)
+  
+  type           LedgerType
+  balance_snapshot Decimal?  @db.Decimal(14, 2) // Optional running balance
+  
+  description    String?
+  created_at     DateTime    @default(now())
+
+  transaction Transaction @relation(fields: [transaction_id], references: [id])
+
+  @@map("ledger_entries")
+  @@index([entity_id])
+  @@index([transaction_id])
+}
