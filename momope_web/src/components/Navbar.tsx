@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { Download, Home, Zap, Users, Briefcase, Phone, Menu, X, ChevronRight } from 'lucide-react';
+import { Download, Home, Zap, Users, Briefcase, Phone, Menu, X, ChevronRight, ShieldCheck } from 'lucide-react';
 import { useLandingStore } from '@/store/landingStore';
 import { usePathname, useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -30,13 +30,36 @@ export default function Navbar() {
         }
     }, [isMobileMenuOpen]);
 
-    const navLinks = [
+    const primaryLinks = [
         { name: 'Home', href: '/', icon: Home },
         { name: 'Solutions', href: '/solutions', icon: Zap },
+    ];
+
+    const companyLinks = [
         { name: 'About Us', href: '/about', icon: Users },
         { name: 'Careers', href: '/careers', icon: Briefcase },
         { name: 'Contact Us', href: '/contact', icon: Phone },
     ];
+
+    const drawerVariants = {
+        closed: { x: '100%' },
+        open: {
+            x: 0,
+            transition: { type: 'spring', damping: 30, stiffness: 300 }
+        }
+    };
+
+    const containerVariants = {
+        open: {
+            transition: { staggerChildren: 0.05, delayChildren: 0.1 }
+        },
+        closed: {}
+    };
+
+    const itemVariants = {
+        closed: { opacity: 0, x: 20 },
+        open: { opacity: 1, x: 0 }
+    };
 
     return (
         <nav
@@ -54,7 +77,7 @@ export default function Navbar() {
 
                 {/* Desktop Menu */}
                 <div className="hidden md:flex items-center gap-8 text-sm font-semibold text-gray-700">
-                    {navLinks.map((link) => (
+                    {[...primaryLinks, ...companyLinks].map((link) => (
                         <Link
                             key={link.name}
                             href={link.href}
@@ -84,7 +107,7 @@ export default function Navbar() {
                     )}
                 </button>
 
-                {/* Premium Mobile Menu Overlay */}
+                {/* Fintech-Grade Mobile Menu Overlay */}
                 <AnimatePresence>
                     {isMobileMenuOpen && (
                         <>
@@ -100,63 +123,109 @@ export default function Navbar() {
 
                             {/* Drawer */}
                             <motion.div
-                                initial={{ x: '100%' }}
-                                animate={{ x: 0 }}
-                                exit={{ x: '100%' }}
-                                transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-                                className="fixed top-0 right-0 h-[100svh] w-[85%] max-w-sm bg-white z-50 md:hidden shadow-2xl flex flex-col"
+                                variants={drawerVariants}
+                                initial="closed"
+                                animate="open"
+                                exit="closed"
+                                className="fixed top-0 right-0 h-[100svh] w-[85%] max-w-sm bg-white z-50 md:hidden shadow-2xl flex flex-col font-sans"
                             >
-                                {/* Drawer Header */}
-                                <div className="p-6 border-b border-gray-100 flex items-center justify-between">
-                                    <img src="/assets/logo-full.png" alt="MomoPe" className="h-8 w-auto" />
-                                    <button
-                                        onClick={() => setIsMobileMenuOpen(false)}
-                                        className="p-2 bg-gray-50 rounded-full hover:bg-gray-100 text-gray-500"
-                                    >
-                                        <X size={20} />
-                                    </button>
+                                {/* 1. Header with Brand Anchor */}
+                                <div className="p-6 pb-4 border-b border-gray-50 bg-white">
+                                    <div className="flex items-center justify-between mb-2">
+                                        <img src="/assets/logo-full.png" alt="MomoPe" className="h-7 w-auto" />
+                                        <button
+                                            onClick={() => setIsMobileMenuOpen(false)}
+                                            className="p-2 bg-gray-50 rounded-full hover:bg-gray-100 text-gray-500 transition-colors"
+                                        >
+                                            <X size={20} />
+                                        </button>
+                                    </div>
+                                    <p className="text-xs font-bold text-gray-400 tracking-wider uppercase ml-1">Scan. Pay. Earn.</p>
                                 </div>
 
-                                {/* Drawer Links */}
-                                <div className="flex-1 overflow-y-auto py-6 px-4 space-y-2">
-                                    {navLinks.map((link, idx) => {
-                                        const Icon = link.icon;
-                                        const isActive = pathname === link.href;
-                                        return (
-                                            <Link
-                                                key={link.name}
-                                                href={link.href}
-                                                onClick={() => setIsMobileMenuOpen(false)}
-                                                className={`flex items-center justify-between p-4 rounded-xl transition-all ${isActive
-                                                        ? 'bg-[#2CB78A]/10 text-[#2CB78A]'
-                                                        : 'text-gray-700 hover:bg-gray-50'
-                                                    }`}
-                                            >
-                                                <div className="flex items-center gap-4">
-                                                    <div className={`p-2 rounded-lg ${isActive ? 'bg-[#2CB78A] text-white' : 'bg-gray-100 text-gray-500'}`}>
-                                                        <Icon size={20} />
-                                                    </div>
-                                                    <span className="font-bold text-lg">{link.name}</span>
-                                                </div>
-                                                <ChevronRight size={18} className={`opacity-50 ${isActive ? 'text-[#2CB78A]' : ''}`} />
-                                            </Link>
-                                        );
-                                    })}
-                                </div>
+                                {/* 2. Grouped Navigation Items */}
+                                <motion.div
+                                    className="flex-1 overflow-y-auto py-6 px-5 space-y-8"
+                                    variants={containerVariants}
+                                >
+                                    {/* Primary Section */}
+                                    <div className="space-y-3">
+                                        <motion.p variants={itemVariants} className="text-[10px] font-bold text-gray-400 uppercase tracking-widest pl-2">Primary</motion.p>
+                                        {primaryLinks.map((link) => {
+                                            const Icon = link.icon;
+                                            const isActive = pathname === link.href;
+                                            return (
+                                                <motion.div variants={itemVariants} key={link.name}>
+                                                    <Link
+                                                        href={link.href}
+                                                        onClick={() => setIsMobileMenuOpen(false)}
+                                                        className={`flex items-center justify-between p-3.5 rounded-xl transition-all group ${isActive
+                                                                ? 'bg-gradient-to-r from-[#2CB78A]/10 to-[#2CB78A]/5 border-l-4 border-[#2CB78A] text-[#2CB78A]'
+                                                                : 'text-gray-600 hover:bg-gray-50 border-l-4 border-transparent'
+                                                            }`}
+                                                    >
+                                                        <div className="flex items-center gap-4">
+                                                            <Icon size={20} strokeWidth={isActive ? 2.5 : 2} className={isActive ? 'text-[#2CB78A]' : 'text-gray-400 group-hover:text-[#2CB78A] transition-colors'} />
+                                                            <span className={`text-[15px] ${isActive ? 'font-bold' : 'font-medium'}`}>{link.name}</span>
+                                                        </div>
+                                                    </Link>
+                                                </motion.div>
+                                            );
+                                        })}
+                                    </div>
 
-                                {/* Drawer Footer */}
-                                <div className="p-6 border-t border-gray-100 bg-gray-50">
+                                    {/* Company Section */}
+                                    <div className="space-y-3">
+                                        <motion.p variants={itemVariants} className="text-[10px] font-bold text-gray-400 uppercase tracking-widest pl-2">Company</motion.p>
+                                        {companyLinks.map((link) => {
+                                            const Icon = link.icon;
+                                            const isActive = pathname === link.href;
+                                            return (
+                                                <motion.div variants={itemVariants} key={link.name}>
+                                                    <Link
+                                                        href={link.href}
+                                                        onClick={() => setIsMobileMenuOpen(false)}
+                                                        className={`flex items-center justify-between p-3.5 rounded-xl transition-all group ${isActive
+                                                                ? 'bg-gradient-to-r from-[#2CB78A]/10 to-[#2CB78A]/5 border-l-4 border-[#2CB78A] text-[#2CB78A]'
+                                                                : 'text-gray-600 hover:bg-gray-50 border-l-4 border-transparent'
+                                                            }`}
+                                                    >
+                                                        <div className="flex items-center gap-4">
+                                                            <Icon size={20} strokeWidth={isActive ? 2.5 : 2} className={isActive ? 'text-[#2CB78A]' : 'text-gray-400 group-hover:text-[#2CB78A] transition-colors'} />
+                                                            <span className={`text-[15px] ${isActive ? 'font-bold' : 'font-medium'}`}>{link.name}</span>
+                                                        </div>
+                                                    </Link>
+                                                </motion.div>
+                                            );
+                                        })}
+                                    </div>
+                                </motion.div>
+
+                                {/* 3. Premium Footer & CTA */}
+                                <div className="p-6 bg-gray-50 border-t border-gray-100">
+                                    <div className="text-center mb-3">
+                                        <p className="text-[10px] font-bold text-gray-500 uppercase tracking-wide flex items-center justify-center gap-1.5 mb-2">
+                                            <span className="w-1.5 h-1.5 rounded-full bg-[#2CB78A] animate-pulse"></span>
+                                            Available on iOS & Android
+                                        </p>
+                                    </div>
                                     <Link href="/#download" onClick={() => setIsMobileMenuOpen(false)}>
-                                        <button className="w-full bg-[#131B26] text-white py-4 rounded-xl font-bold text-lg shadow-lg shadow-gray-900/10 active:scale-95 transition-all flex items-center justify-center gap-3">
-                                            <Download size={20} />
+                                        <button className="w-full bg-[#131B26] text-white py-4 rounded-xl font-bold text-base shadow-xl shadow-gray-900/5 active:scale-95 transition-all flex items-center justify-center gap-3 relative overflow-hidden group">
+                                            <div className="absolute inset-0 bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity" />
+                                            <Download size={18} />
                                             Download App
                                         </button>
                                     </Link>
 
-                                    <div className="mt-6 flex justify-center gap-6 text-gray-400">
-                                        <span className="text-xs font-semibold">Privacy</span>
-                                        <span className="text-xs font-semibold">Terms</span>
-                                        <span className="text-xs font-semibold">Support</span>
+                                    <div className="mt-8 flex flex-col items-center gap-4">
+                                        <div className="flex items-center gap-6 text-xs font-semibold text-gray-400">
+                                            <span className="hover:text-gray-600 cursor-pointer transition-colors">Privacy</span>
+                                            <span className="w-1 h-1 rounded-full bg-gray-300"></span>
+                                            <span className="hover:text-gray-600 cursor-pointer transition-colors">Terms</span>
+                                            <span className="w-1 h-1 rounded-full bg-gray-300"></span>
+                                            <span className="hover:text-gray-600 cursor-pointer transition-colors">Support</span>
+                                        </div>
+                                        <p className="text-[10px] text-gray-300 font-medium">© MomoPe 2026</p>
                                     </div>
                                 </div>
                             </motion.div>
