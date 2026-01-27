@@ -95,67 +95,84 @@ export default function ContactPage() {
 
                 <div className="container mx-auto px-6 py-16 -mt-20 relative z-20">
                     {/* Actionable Contact Cards */}
+                    {/* Actionable Contact Cards - Redesigned Horizontal Layout */}
                     <div className="grid md:grid-cols-3 gap-6 mb-24">
                         {/* Email Card */}
-                        <a href="mailto:support@momope.com" className={`group bg-gradient-to-br from-white via-white to-green-50/30 p-8 rounded-3xl shadow-xl shadow-gray-200/50 hover:shadow-2xl hover:shadow-green-500/20 hover:-translate-y-3 transition-all duration-500 border relative overflow-hidden ${isRecommended('email') ? 'border-[#2CB78A] ring-4 ring-[#2CB78A]/10' : 'border-gray-100'}`}>
-                            {/* Background Gradient Orb */}
-                            <div className="absolute -top-20 -right-20 w-40 h-40 bg-gradient-to-br from-[#2CB78A]/10 to-teal-400/5 rounded-full blur-3xl group-hover:scale-150 transition-transform duration-700"></div>
-
+                        <a href="mailto:support@momope.com" className={`group bg-white p-6 rounded-2xl shadow-lg shadow-gray-200/40 hover:shadow-xl hover:shadow-green-500/10 hover:-translate-y-1 transition-all duration-300 border relative overflow-hidden flex flex-col ${isRecommended('email') ? 'border-[#2CB78A] ring-1 ring-[#2CB78A]/20' : 'border-gray-100 hover:border-[#2CB78A]/30'}`}>
                             {isRecommended('email') && (
-                                <div className="absolute top-0 right-0 bg-gradient-to-r from-[#2CB78A] to-teal-500 text-white text-[10px] font-bold px-3 py-1 rounded-bl-xl uppercase tracking-wider shadow-lg">
+                                <div className="absolute top-0 right-0 bg-gradient-to-l from-[#2CB78A] to-emerald-500 text-white text-[9px] font-extrabold px-3 py-1 rounded-bl-lg uppercase tracking-wider shadow-sm z-20">
                                     Recommended
                                 </div>
                             )}
-                            <div className="absolute top-0 right-0 p-4 opacity-0 group-hover:opacity-100 transition-all duration-300 group-hover:translate-x-1">
-                                <ArrowRight className="text-[#2CB78A]" />
-                            </div>
 
-                            {/* Enhanced Icon with Gradient Background */}
-                            <div className="relative w-16 h-16 mb-6 group-hover:scale-110 group-hover:-translate-y-1 transition-all duration-500">
-                                <div className="absolute inset-0 bg-gradient-to-br from-[#2CB78A] to-teal-500 rounded-2xl opacity-10 group-hover:opacity-20 transition-opacity"></div>
-                                <div className="absolute inset-0 bg-gradient-to-br from-[#2CB78A]/20 to-transparent rounded-2xl blur-xl group-hover:blur-2xl transition-all"></div>
-                                <div className="relative w-full h-full bg-gradient-to-br from-green-50 to-teal-50 rounded-2xl flex items-center justify-center text-[#2CB78A] group-hover:from-green-100 group-hover:to-teal-100 transition-colors shadow-lg shadow-green-500/10 group-hover:shadow-green-500/20">
-                                    <Mail size={28} className="group-hover:scale-110 transition-transform" />
+                            {/* Horizontal Header Row */}
+                            <div className="flex items-start gap-4 mb-3 relative z-10">
+                                <div className="relative w-10 h-10 flex-shrink-0 mt-1">
+                                    <div className="absolute inset-0 bg-[#2CB78A]/10 rounded-lg group-hover:bg-[#2CB78A]/20 transition-colors"></div>
+                                    <div className="absolute inset-0 flex items-center justify-center text-[#2CB78A]">
+                                        <Mail size={20} strokeWidth={2.5} />
+                                    </div>
+                                </div>
+                                <div className="flex-1 min-w-0">
+                                    <h3 className="font-bold text-lg text-gray-900 group-hover:text-[#2CB78A] transition-colors leading-tight mb-0.5 mt-0.5">Email Us</h3>
+                                    <p className="text-gray-500 text-xs">For general queries & support</p>
                                 </div>
                             </div>
 
-                            <h3 className="font-bold text-xl mb-2 text-gray-900 group-hover:text-[#2CB78A] transition-colors">Email Us</h3>
-                            <p className="text-gray-500 text-sm mb-4">For general queries & support</p>
-                            <div className="flex items-center gap-2 text-xs font-semibold text-green-600 bg-green-50 px-3 py-1 rounded-full w-fit mb-4 group-hover:bg-green-100 transition-colors">
-                                <Clock size={12} /> Replies within 24 hours
+                            {/* Status Badge */}
+                            <div className="mb-6 pl-[56px]">
+                                <div className="inline-flex items-center gap-1.5 text-[10px] font-bold text-green-700 bg-green-50 px-2.5 py-1 rounded-md border border-green-100/50">
+                                    <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse"></span>
+                                    Replies within 24 hours
+                                </div>
                             </div>
-                            <span className="text-[#2CB78A] font-bold text-lg group-hover:underline decoration-2 underline-offset-4">support@momope.com</span>
+
+                            {/* Action Link at Bottom */}
+                            <div className="mt-auto pl-[56px]">
+                                <span className="text-[#131B26] font-bold text-sm group-hover:text-[#2CB78A] transition-colors flex items-center gap-2">
+                                    support@momope.com
+                                    <ArrowRight size={14} className="opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all text-[#2CB78A]" />
+                                </span>
+                            </div>
                         </a>
 
                         {/* Phone Card */}
-                        <a href="tel:+918639831132" className={`group bg-gradient-to-br from-white via-white to-blue-50/30 p-8 rounded-3xl shadow-xl shadow-gray-200/50 hover:shadow-2xl hover:shadow-blue-500/20 hover:-translate-y-3 transition-all duration-500 border relative overflow-hidden ${isRecommended('phone') ? 'border-blue-500 ring-4 ring-blue-500/10' : 'border-gray-100'}`}>
-                            {/* Background Gradient Orb */}
-                            <div className="absolute -top-20 -right-20 w-40 h-40 bg-gradient-to-br from-blue-400/10 to-cyan-400/5 rounded-full blur-3xl group-hover:scale-150 transition-transform duration-700"></div>
-
+                        <a href="tel:+918639831132" className={`group bg-white p-6 rounded-2xl shadow-lg shadow-gray-200/40 hover:shadow-xl hover:shadow-blue-500/10 hover:-translate-y-1 transition-all duration-300 border relative overflow-hidden flex flex-col ${isRecommended('phone') ? 'border-blue-500 ring-1 ring-blue-500/20' : 'border-gray-100 hover:border-blue-400/30'}`}>
                             {isRecommended('phone') && (
-                                <div className="absolute top-0 right-0 bg-gradient-to-r from-blue-500 to-cyan-500 text-white text-[10px] font-bold px-3 py-1 rounded-bl-xl uppercase tracking-wider shadow-lg">
+                                <div className="absolute top-0 right-0 bg-gradient-to-l from-blue-500 to-cyan-500 text-white text-[9px] font-extrabold px-3 py-1 rounded-bl-lg uppercase tracking-wider shadow-sm z-20">
                                     Recommended
                                 </div>
                             )}
-                            <div className="absolute top-0 right-0 p-4 opacity-0 group-hover:opacity-100 transition-all duration-300 group-hover:translate-x-1">
-                                <ArrowRight className="text-blue-600" />
-                            </div>
 
-                            {/* Enhanced Icon with Gradient Background */}
-                            <div className="relative w-16 h-16 mb-6 group-hover:scale-110 group-hover:-translate-y-1 transition-all duration-500">
-                                <div className="absolute inset-0 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-2xl opacity-10 group-hover:opacity-20 transition-opacity"></div>
-                                <div className="absolute inset-0 bg-gradient-to-br from-blue-500/20 to-transparent rounded-2xl blur-xl group-hover:blur-2xl transition-all"></div>
-                                <div className="relative w-full h-full bg-gradient-to-br from-blue-50 to-cyan-50 rounded-2xl flex items-center justify-center text-blue-600 group-hover:from-blue-100 group-hover:to-cyan-100 transition-colors shadow-lg shadow-blue-500/10 group-hover:shadow-blue-500/20">
-                                    <Phone size={28} className="group-hover:scale-110 transition-transform" />
+                            {/* Horizontal Header Row */}
+                            <div className="flex items-start gap-4 mb-3 relative z-10">
+                                <div className="relative w-10 h-10 flex-shrink-0 mt-1">
+                                    <div className="absolute inset-0 bg-blue-500/10 rounded-lg group-hover:bg-blue-500/20 transition-colors"></div>
+                                    <div className="absolute inset-0 flex items-center justify-center text-blue-600">
+                                        <Phone size={20} strokeWidth={2.5} />
+                                    </div>
+                                </div>
+                                <div className="flex-1 min-w-0">
+                                    <h3 className="font-bold text-lg text-gray-900 group-hover:text-blue-600 transition-colors leading-tight mb-0.5 mt-0.5">Call Us</h3>
+                                    <p className="text-gray-500 text-xs">Mon-Fri, 9am - 6pm IST</p>
                                 </div>
                             </div>
 
-                            <h3 className="font-bold text-xl mb-2 text-gray-900 group-hover:text-blue-600 transition-colors">Call Us</h3>
-                            <p className="text-gray-500 text-sm mb-4">Mon-Fri, 9am - 6pm IST</p>
-                            <div className="flex items-center gap-2 text-xs font-semibold text-blue-600 bg-blue-50 px-3 py-1 rounded-full w-fit mb-4 group-hover:bg-blue-100 transition-colors">
-                                <CheckCircle size={12} /> Currently Available
+                            {/* Status Badge */}
+                            <div className="mb-6 pl-[56px]">
+                                <div className="inline-flex items-center gap-1.5 text-[10px] font-bold text-blue-700 bg-blue-50 px-2.5 py-1 rounded-md border border-blue-100/50">
+                                    <span className="w-1.5 h-1.5 rounded-full bg-blue-500"></span>
+                                    Currently Available
+                                </div>
                             </div>
-                            <span className="text-blue-600 font-bold text-lg group-hover:underline decoration-2 underline-offset-4">+91 8639831132</span>
+
+                            {/* Action Link at Bottom */}
+                            <div className="mt-auto pl-[56px]">
+                                <span className="text-[#131B26] font-bold text-sm group-hover:text-blue-600 transition-colors flex items-center gap-2">
+                                    +91 8639831132
+                                    <ArrowRight size={14} className="opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all text-blue-600" />
+                                </span>
+                            </div>
                         </a>
 
                         {/* Visit Card */}
@@ -163,37 +180,41 @@ export default function ContactPage() {
                             href="https://maps.google.com/?q=MomoPe+Digital+Hub+Pvt+Ltd+Krishnapuram+Kadapa"
                             target="_blank"
                             rel="noopener noreferrer"
-                            className={`group bg-gradient-to-br from-white via-white to-purple-50/30 p-8 rounded-3xl shadow-xl shadow-gray-200/50 hover:shadow-2xl hover:shadow-purple-500/20 hover:-translate-y-3 transition-all duration-500 border relative overflow-hidden ${isRecommended('visit') ? 'border-purple-500 ring-4 ring-purple-500/10' : 'border-gray-100'}`}
+                            className={`group bg-white p-6 rounded-2xl shadow-lg shadow-gray-200/40 hover:shadow-xl hover:shadow-purple-500/10 hover:-translate-y-1 transition-all duration-300 border relative overflow-hidden flex flex-col ${isRecommended('visit') ? 'border-purple-500 ring-1 ring-purple-500/20' : 'border-gray-100 hover:border-purple-400/30'}`}
                         >
-                            {/* Background Gradient Orb */}
-                            <div className="absolute -top-20 -right-20 w-40 h-40 bg-gradient-to-br from-purple-400/10 to-pink-400/5 rounded-full blur-3xl group-hover:scale-150 transition-transform duration-700"></div>
-
                             {isRecommended('visit') && (
-                                <div className="absolute top-0 right-0 bg-gradient-to-r from-purple-500 to-pink-500 text-white text-[10px] font-bold px-3 py-1 rounded-bl-xl uppercase tracking-wider shadow-lg">
+                                <div className="absolute top-0 right-0 bg-gradient-to-l from-purple-500 to-fuchsia-500 text-white text-[9px] font-extrabold px-3 py-1 rounded-bl-lg uppercase tracking-wider shadow-sm z-20">
                                     Recommended
                                 </div>
                             )}
-                            <div className="absolute top-0 right-0 p-4 opacity-0 group-hover:opacity-100 transition-all duration-300 group-hover:translate-x-1">
-                                <ArrowRight className="text-purple-600" />
-                            </div>
 
-                            {/* Enhanced Icon with Gradient Background */}
-                            <div className="relative w-16 h-16 mb-6 group-hover:scale-110 group-hover:-translate-y-1 transition-all duration-500">
-                                <div className="absolute inset-0 bg-gradient-to-br from-purple-500 to-pink-500 rounded-2xl opacity-10 group-hover:opacity-20 transition-opacity"></div>
-                                <div className="absolute inset-0 bg-gradient-to-br from-purple-500/20 to-transparent rounded-2xl blur-xl group-hover:blur-2xl transition-all"></div>
-                                <div className="relative w-full h-full bg-gradient-to-br from-purple-50 to-pink-50 rounded-2xl flex items-center justify-center text-purple-600 group-hover:from-purple-100 group-hover:to-pink-100 transition-colors shadow-lg shadow-purple-500/10 group-hover:shadow-purple-500/20">
-                                    <MapPin size={28} className="group-hover:scale-110 transition-transform" />
+                            {/* Horizontal Header Row */}
+                            <div className="flex items-start gap-4 mb-3 relative z-10">
+                                <div className="relative w-10 h-10 flex-shrink-0 mt-1">
+                                    <div className="absolute inset-0 bg-purple-500/10 rounded-lg group-hover:bg-purple-500/20 transition-colors"></div>
+                                    <div className="absolute inset-0 flex items-center justify-center text-purple-600">
+                                        <MapPin size={20} strokeWidth={2.5} />
+                                    </div>
+                                </div>
+                                <div className="flex-1 min-w-0">
+                                    <h3 className="font-bold text-lg text-gray-900 group-hover:text-purple-600 transition-colors leading-tight mb-0.5 mt-0.5">Visit HQ</h3>
+                                    <p className="text-gray-500 text-xs">MomoPe Digital Hub Pvt Ltd</p>
                                 </div>
                             </div>
 
-                            <h3 className="font-bold text-xl mb-2 text-gray-900 group-hover:text-purple-600 transition-colors">Visit HQ</h3>
-                            <p className="text-gray-500 text-sm mb-4">MomoPe Digital Hub Pvt Ltd</p>
-                            <div className="flex items-center gap-2 text-xs font-semibold text-purple-600 bg-purple-50 px-3 py-1 rounded-full w-fit mb-4 group-hover:bg-purple-100 transition-colors">
-                                <MapPin size={12} /> Registered Office
+                            {/* Status Badge */}
+                            <div className="mb-6 pl-[56px]">
+                                <div className="inline-flex items-center gap-1.5 text-[10px] font-bold text-purple-700 bg-purple-50 px-2.5 py-1 rounded-md border border-purple-100/50">
+                                    <MapPin size={10} /> Registered Office
+                                </div>
                             </div>
-                            <div className="text-gray-700 text-sm leading-relaxed font-medium group-hover:text-purple-700 transition-colors">
-                                4/106, Krishnapuram, YSR Kadapa<br />
-                                Andhra Pradesh – 516003
+
+                            {/* Action Link at Bottom */}
+                            <div className="mt-auto pl-[56px]">
+                                <span className="text-[#131B26] font-bold text-xs leading-relaxed group-hover:text-purple-600 transition-colors block">
+                                    4/106, Krishnapuram, YSR Kadapa<br />
+                                    Andhra Pradesh – 516003
+                                </span>
                             </div>
                         </a>
                     </div>
