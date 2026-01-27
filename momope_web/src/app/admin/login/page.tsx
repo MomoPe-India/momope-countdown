@@ -99,11 +99,19 @@ export default function AdminLogin() {
             {/* Right Side - Login Form */}
             <div className="w-full lg:w-7/12 flex flex-col relative">
                 {/* Mobile Header */}
-                <div className="lg:hidden bg-[#0B1121] p-6 text-white text-center pb-20 relative overflow-hidden">
+                <div className="lg:hidden bg-[#0B1121] px-6 pt-6 pb-24 text-white relative overflow-hidden">
                     <div className="absolute top-0 right-0 w-32 h-32 bg-[#2CB78A]/20 rounded-full blur-3xl"></div>
-                    <Link href="/">
-                        <img src="/assets/logo-full.png" alt="MomoPe" className="h-8 w-auto mx-auto brightness-0 invert relative z-10" />
-                    </Link>
+
+                    <div className="relative z-10 flex items-center justify-between">
+                        <Link href="/">
+                            <img src="/assets/logo-full.png" alt="MomoPe" className="h-8 w-auto brightness-0 invert" />
+                        </Link>
+
+                        <Link href="/" className="flex items-center gap-2 text-xs font-bold text-slate-300 hover:text-white transition-colors bg-white/10 px-4 py-2 rounded-full border border-white/5">
+                            <span>Home</span>
+                            <ArrowRight size={14} />
+                        </Link>
+                    </div>
                 </div>
 
                 <div className="flex-1 flex items-center justify-center p-6 sm:p-12 -mt-10 lg:mt-0 z-10">
