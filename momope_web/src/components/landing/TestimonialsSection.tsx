@@ -10,7 +10,7 @@ const testimonials = [
         name: "Rajesh Kumar",
         role: "Owner, Spice Garden",
         category: "Restaurant",
-        image: "https://randomuser.me/api/portraits/men/32.jpg",
+        image: "https://images.unsplash.com/photo-1556157382-97eda2d62296?auto=format&fit=crop&q=80&w=200&h=200",
         content: "Since switching to MomoPe, **my transaction failures have dropped to zero.** The daily settlement is a lifesaver.",
         rating: 5
     },
@@ -18,7 +18,7 @@ const testimonials = [
         name: "Priya Sharma",
         role: "Manager, Trends Boutique",
         category: "Retail",
-        image: "https://randomuser.me/api/portraits/women/44.jpg",
+        image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=200&h=200",
         content: "Customers actually ask to pay via MomoPe to earn coins. **My repeat customers increased by 30%.**",
         rating: 5
     },
@@ -26,7 +26,7 @@ const testimonials = [
         name: "Amit Patel",
         role: "Founder, TechHub",
         category: "Startup",
-        image: "https://randomuser.me/api/portraits/men/85.jpg",
+        image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=200&h=200",
         content: "Zero setup fees and the commission is transparent. **The admin dashboard gives me insights I didn't know I needed.**",
         rating: 5
     }

@@ -1,6 +1,7 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  // @ts-ignore
   eslint: {
     ignoreDuringBuilds: true,
   },
@@ -14,6 +15,12 @@ const nextConfig: NextConfig = {
         hostname: 'randomuser.me',
         port: '',
         pathname: '/api/portraits/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'images.unsplash.com',
+        port: '',
+        pathname: '/**',
       },
     ],
   },
