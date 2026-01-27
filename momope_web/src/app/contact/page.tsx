@@ -22,19 +22,128 @@ export default function ContactPage() {
         else if (reasonId === 'all') setFaqCategory('customer');
     };
 
-    const isRecommended = (cardType: 'email' | 'phone' | 'visit') => {
-        if (contactReason === 'all') return false;
-        if (contactReason === 'support' && (cardType === 'email' || cardType === 'phone')) return true;
-        if (contactReason === 'merchant' && (cardType === 'phone')) return true;
-        if (contactReason === 'partnership' && (cardType === 'email' || cardType === 'visit')) return true;
+    const isRecommended = (cardType: 'email' | 'phone') => {
+        if (cardType === 'email') return ['all', 'partnership'].includes(contactReason);
+        if (cardType === 'phone') return ['support', 'merchant'].includes(contactReason);
         return false;
     };
 
-    const reasons = [
-        { id: 'all', label: 'General Inquiry' },
-        { id: 'support', label: 'Technical Support' },
-        { id: 'merchant', label: 'Merchant Onboarding' },
-        { id: 'partnership', label: 'Partnerships' }
+    {/* Actionable Contact Cards - Redesigned Horizontal Layout */ }
+    <div className="grid md:grid-cols-3 gap-6 mb-24">
+        {/* Email Card */}
+        <a href="mailto:support@momope.com" className={`group bg-white p-6 rounded-2xl shadow-lg shadow-gray-200/40 hover:shadow-xl hover:shadow-green-500/10 hover:-translate-y-1 transition-all duration-300 border relative overflow-hidden flex flex-col ${isRecommended('email') ? 'border-[#2CB78A] ring-1 ring-[#2CB78A]/20' : 'border-gray-100 hover:border-gray-200'}`}>
+            {isRecommended('email') && (
+                <div className="absolute top-0 right-0 bg-gradient-to-l from-[#2CB78A] to-emerald-500 text-white text-[9px] font-extrabold px-3 py-1 rounded-bl-lg uppercase tracking-wider shadow-sm z-20">
+                    Recommended
+                </div>
+            )}
+
+            {/* Horizontal Header Row */}
+            <div className="flex items-start gap-4 mb-1 relative z-10">
+                <div className={`relative w-10 h-10 flex-shrink-0 mt-1 transition-colors rounded-lg flex items-center justify-center ${isRecommended('email') ? 'bg-[#2CB78A]/10 text-[#2CB78A]' : 'bg-gray-50 text-gray-400 group-hover:bg-[#2CB78A]/10 group-hover:text-[#2CB78A]'}`}>
+                    <Mail size={20} strokeWidth={2.5} />
+                </div>
+                <div className="flex-1 min-w-0 pt-1">
+                    <h3 className={`font-bold text-lg transition-colors leading-tight mb-0.5 ${isRecommended('email') ? 'text-gray-900' : 'text-gray-700 group-hover:text-gray-900'}`}>Email Us</h3>
+                    <p className="text-gray-500 text-xs">For general queries & support</p>
+                </div>
+            </div>
+
+            {/* Status Badge */}
+            <div className="mb-6 pl-[56px]">
+                <div className="inline-flex items-center gap-1.5 text-[10px] font-bold text-green-700 bg-green-50 px-2.5 py-1 rounded-md border border-green-100/50">
+                    <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse"></span>
+                    Replies within 24 hours
+                </div>
+            </div>
+
+            {/* Action Link at Bottom */}
+            <div className="mt-auto pl-[56px]">
+                <span className="text-[#131B26] font-bold text-sm group-hover:text-[#2CB78A] transition-colors flex items-center gap-2">
+                    Send an Email
+                    <ArrowRight size={14} className="opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all text-[#2CB78A]" />
+                </span>
+                <p className="text-xs text-slate-400 mt-1 font-medium">support@momope.com</p>
+            </div>
+        </a>
+
+        {/* Phone Card */}
+        <a href="tel:+918639831132" className={`group bg-white p-6 rounded-2xl shadow-lg shadow-gray-200/40 hover:shadow-xl hover:shadow-blue-500/10 hover:-translate-y-1 transition-all duration-300 border relative overflow-hidden flex flex-col ${isRecommended('phone') ? 'border-blue-500 ring-1 ring-blue-500/20' : 'border-gray-100 hover:border-gray-200'}`}>
+            {isRecommended('phone') && (
+                <div className="absolute top-0 right-0 bg-gradient-to-l from-blue-500 to-cyan-500 text-white text-[9px] font-extrabold px-3 py-1 rounded-bl-lg uppercase tracking-wider shadow-sm z-20">
+                    Recommended
+                </div>
+            )}
+
+            {/* Horizontal Header Row */}
+            <div className="flex items-start gap-4 mb-1 relative z-10">
+                <div className={`relative w-10 h-10 flex-shrink-0 mt-1 transition-colors rounded-lg flex items-center justify-center ${isRecommended('phone') ? 'bg-blue-50 text-blue-600' : 'bg-gray-50 text-gray-400 group-hover:bg-blue-50 group-hover:text-blue-600'}`}>
+                    <Phone size={20} strokeWidth={2.5} />
+                </div>
+                <div className="flex-1 min-w-0 pt-1">
+                    <h3 className={`font-bold text-lg transition-colors leading-tight mb-0.5 ${isRecommended('phone') ? 'text-gray-900' : 'text-gray-700 group-hover:text-gray-900'}`}>Call Us</h3>
+                    <p className="text-gray-500 text-xs">Mon-Fri, 9am - 6pm IST</p>
+                </div>
+            </div>
+
+            {/* Status Badge */}
+            <div className="mb-6 pl-[56px]">
+                <div className="inline-flex items-center gap-1.5 text-[10px] font-bold text-blue-700 bg-blue-50 px-2.5 py-1 rounded-md border border-blue-100/50">
+                    <span className="w-1.5 h-1.5 rounded-full bg-blue-500"></span>
+                    Real-time support
+                </div>
+            </div>
+
+            {/* Action Link at Bottom */}
+            <div className="mt-auto pl-[56px]">
+                <span className="text-[#131B26] font-bold text-sm group-hover:text-blue-600 transition-colors flex items-center gap-2">
+                    Call Now
+                    <ArrowRight size={14} className="opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all text-blue-600" />
+                </span>
+                <p className="text-xs text-slate-400 mt-1 font-medium">+91 8639831132</p>
+            </div>
+        </a>
+
+        {/* Visit Card */}
+        <a
+            href="https://maps.google.com/?q=MomoPe+Digital+Hub+Pvt+Ltd+Krishnapuram+Kadapa"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group bg-white p-6 rounded-2xl shadow-lg shadow-gray-200/40 hover:shadow-xl hover:shadow-purple-500/10 hover:-translate-y-1 transition-all duration-300 border border-gray-100 hover:border-gray-200 relative overflow-hidden flex flex-col"
+        >
+            {/* Horizontal Header Row */}
+            <div className="flex items-start gap-4 mb-1 relative z-10">
+                <div className="relative w-10 h-10 flex-shrink-0 mt-1 bg-gray-50 text-gray-400 group-hover:bg-purple-50 group-hover:text-purple-600 transition-colors rounded-lg flex items-center justify-center">
+                    <MapPin size={20} strokeWidth={2.5} />
+                </div>
+                <div className="flex-1 min-w-0 pt-1">
+                    <h3 className="font-bold text-lg text-gray-700 group-hover:text-gray-900 transition-colors leading-tight mb-0.5">Visit HQ</h3>
+                    <p className="text-gray-500 text-xs">MomoPe Digital Hub Pvt Ltd</p>
+                </div>
+            </div>
+
+            {/* Status Badge */}
+            <div className="mb-6 pl-[56px]">
+                <div className="inline-flex items-center gap-1.5 text-[10px] font-bold text-purple-700 bg-purple-50 px-2.5 py-1 rounded-md border border-purple-100/50">
+                    <div className="w-1.5 h-1.5 rounded-full bg-purple-500"></div>
+                    By appointment
+                </div>
+            </div>
+
+            {/* Action Link at Bottom */}
+            <div className="mt-auto pl-[56px]">
+                <span className="text-[#131B26] font-bold text-sm group-hover:text-purple-600 transition-colors flex items-center gap-2">
+                    Get Directions
+                    <ArrowRight size={14} className="opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all text-purple-600" />
+                </span>
+                <p className="text-xs text-slate-400 mt-1 font-medium truncate">YSR Kadapa, AP</p>
+            </div>
+        </a>
+    </div>
+    { id: 'all', label: 'General Inquiry' },
+    { id: 'support', label: 'Technical Support' },
+    { id: 'merchant', label: 'Merchant Onboarding' },
+    { id: 'partnership', label: 'Partnerships' }
     ];
 
     const faqs = {
