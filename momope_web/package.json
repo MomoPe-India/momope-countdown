@@ -18,10 +18,10 @@
     "jimp": "^1.6.0",
     "jsonwebtoken": "^9.0.3",
     "lucide-react": "^0.562.0",
-    "next": "15.1.0",
+    "next": "^16.1.5",
     "razorpay": "^2.9.6",
-    "react": "19.0.0",
-    "react-dom": "19.0.0",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
     "styled-jsx": "^5.1.7",
     "tailwind-merge": "^3.4.0",
     "zustand": "^5.0.10"
