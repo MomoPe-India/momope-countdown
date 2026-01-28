@@ -75,6 +75,7 @@ export default function RootLayout({
       </head>
       <body suppressHydrationWarning>
         <GoogleAnalytics GA_MEASUREMENT_ID={process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || ''} />
+        <AppLaunchPopup />
         <main style={{ minHeight: '80vh' }}>
           {children}
         </main>
