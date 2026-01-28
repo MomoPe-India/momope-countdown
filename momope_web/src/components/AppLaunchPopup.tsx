@@ -99,59 +99,24 @@ export default function AppLaunchPopup() {
 
                         {/* Content Body */}
                         <div className="p-8">
-                            {!isSubmitted ? (
-                                <>
-                                    <p className="text-gray-600 mb-6 font-medium">
-                                        Join the waitlist to get <span className="text-[#2CB78A] font-bold">early access</span> and exclusive launch rewards.
-                                    </p>
+                            <p className="text-gray-600 mb-8 font-medium leading-relaxed">
+                                We are putting the final touches on the <span className="text-[#2CB78A] font-bold">MomoPe App</span>.
+                                <br /><br />
+                                Experience the fastest way to scan, pay, and earn rewards at your favorite local spots.
+                                Coming very soon to Android & iOS.
+                            </p>
 
-                                    <form onSubmit={handleSubmit} className="space-y-4">
-                                        <div className="relative">
-                                            <input
-                                                type="email"
-                                                value={email}
-                                                onChange={(e) => setEmail(e.target.value)}
-                                                placeholder="Enter your email address"
-                                                required
-                                                className="w-full bg-gray-50 border border-gray-200 text-gray-900 rounded-xl py-4 pl-4 pr-4 focus:outline-none focus:ring-2 focus:ring-[#2CB78A] focus:border-transparent transition-all font-medium"
-                                            />
-                                        </div>
+                            <button
+                                onClick={handleClose}
+                                className="w-full bg-gradient-to-r from-[#131B26] to-[#1e293b] hover:from-[#2CB78A] hover:to-[#249671] text-white py-4 rounded-xl font-bold text-base transition-all shadow-lg shadow-gray-900/10 hover:shadow-green-500/20 active:scale-[0.98] flex items-center justify-center gap-2 group"
+                            >
+                                <span>Got it, I'll be ready!</span>
+                                <ArrowRight size={18} className="transition-transform group-hover:translate-x-1" />
+                            </button>
 
-                                        <button
-                                            type="submit"
-                                            disabled={isLoading}
-                                            className="w-full bg-gradient-to-r from-[#131B26] to-[#1e293b] hover:from-[#2CB78A] hover:to-[#249671] text-white py-4 rounded-xl font-bold text-base transition-all shadow-lg shadow-gray-900/10 hover:shadow-green-500/20 active:scale-[0.98] disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2 group"
-                                        >
-                                            {isLoading ? (
-                                                <>
-                                                    <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
-                                                    <span>Joining...</span>
-                                                </>
-                                            ) : (
-                                                <>
-                                                    <Bell size={18} className="group-hover:animate-swing" />
-                                                    <span>Notify Me When Launched</span>
-                                                    <ArrowRight size={18} className="opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
-                                                </>
-                                            )}
-                                        </button>
-                                    </form>
-                                    <p className="text-center text-[10px] text-gray-400 mt-4">
-                                        We respect your privacy. No spam, ever.
-                                    </p>
-                                </>
-                            ) : (
-                                <div className="text-center py-8 animate-in fade-in zoom-in duration-300">
-                                    <div className="w-16 h-16 bg-green-100 text-[#2CB78A] rounded-full flex items-center justify-center mx-auto mb-4">
-                                        <CheckCircle size={32} />
-                                    </div>
-                                    <h3 className="text-2xl font-bold text-gray-900 mb-2">You're on the list! 🎉</h3>
-                                    <p className="text-gray-500">
-                                        We'll let you know the moment MomoPe hits the App Store. <br />
-                                        Stay tuned for your exclusive rewards.
-                                    </p>
-                                </div>
-                            )}
+                            <p className="text-center text-[10px] text-gray-400 mt-6">
+                                Launching February 28, 2026
+                            </p>
                         </div>
                     </motion.div>
                 </>
